@@ -21,6 +21,17 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+router.get('/name/:name', async (req, res) => {
+    try {
+        const productName = req.params.name;
+        const product = await Product.find({ name: productName });
+        if (!product) throw new Error('Product not found');
+        res.json(product);
+    } catch (error) {
+        res.status(500).send(error.message);
+    }
+});
+
 router.post('/', async (req, res) => {
     try {
         const { name, price, quantity } = req.body;
